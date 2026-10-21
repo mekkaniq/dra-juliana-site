@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://dra-juliana-site.vercel.app/sitemap.xml
