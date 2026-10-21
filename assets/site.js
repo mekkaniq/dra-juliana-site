@@ -31,6 +31,7 @@
     v.addEventListener('playing',function(){el.classList.remove('is-loading');});
     v.addEventListener('canplay',function(){el.classList.remove('is-loading');});
     v.addEventListener('error',function(){deactivate(el);});
+    var bar=el.querySelector('.vp-bar i');if(bar)v.addEventListener('timeupdate',function(){if(v.duration)bar.style.transform='scaleX('+(v.currentTime/v.duration)+')';});
     v.addEventListener('ended',function(){deactivate(el);v.currentTime=0;if(el._visible)preview(el);});
     el.querySelector('.vp-overlay').addEventListener('click',function(){
       players.forEach(function(o){if(o!==el&&o.classList.contains('is-active'))deactivate(o);});

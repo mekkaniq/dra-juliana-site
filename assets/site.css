@@ -226,6 +226,11 @@ section{scroll-margin-top:90px}
 .vplayer.is-active .vp-mute{display:none}
 .vp-spin{position:absolute;left:50%;top:50%;z-index:4;width:44px;height:44px;margin:-22px 0 0 -22px;border-radius:50%;border:2px solid rgba(255,255,255,.25);border-top-color:var(--gold-hi);animation:spin .8s linear infinite;display:none;pointer-events:none}
 .vplayer.is-loading .vp-spin{display:block}
+.vp-bar{position:absolute;left:14px;right:14px;top:8px;height:2px;border-radius:2px;background:rgba(255,255,255,.28);z-index:3;overflow:hidden;pointer-events:none}
+.vp-bar i{display:block;height:100%;width:100%;background:var(--gold-hi);transform-origin:left;transform:scaleX(0)}
+.vplayer.is-active .vp-bar{display:none}
+.reel .vp-mute{top:18px}
+.bastidores .vp-bar{left:32%;right:32%;top:26px}
 /* play pill */
 .play{display:flex;align-items:center;gap:12px;background:rgba(251,246,242,.92);color:var(--ink);border-radius:999px;padding:8px 18px 8px 8px;backdrop-filter:blur(6px)}
 .play i{width:42px;height:42px;border-radius:50%;background:var(--raspberry);display:grid;place-items:center;flex:none}
