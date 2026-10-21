@@ -99,6 +99,57 @@
   window.addEventListener('scroll',function(){if(!dq)dq=requestAnimationFrame(drawUpdate);},{passive:true});
   window.addEventListener('resize',drawUpdate);drawUpdate();
 
+  // lista de interesse: o botão se transforma no cartão (efeito de mola)
+  var JOIN={action:'https://docs.google.com/forms/d/e/1FAIpQLSd4i8te0ZYiQ8CHe3ZWFagnWaSBi9BOtLhJOBN4udm0w5UDVw/formResponse',
+    viewform:'https://docs.google.com/forms/d/e/1FAIpQLSd4i8te0ZYiQ8CHe3ZWFagnWaSBi9BOtLhJOBN4udm0w5UDVw/viewform',
+    entries:{email:'',nome:'',profissao:'',tema:'',formato:'',floripa:''}};
+  var jb=document.getElementById('join-btn'),jc=document.getElementById('join-card'),jbd=document.getElementById('join-backdrop');
+  if(jb&&jc){
+    var jform=document.getElementById('join-form'),jdone=document.getElementById('join-done'),jerr=document.getElementById('join-error');
+    var SPRING='cubic-bezier(.32,1.28,.42,1)',reduceJ=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    function morph(from,to,dir){
+      var a=from.getBoundingClientRect(),b=to.getBoundingClientRect();
+      var sx=a.width/b.width,sy=a.height/b.height,dx=(a.left+a.width/2)-(b.left+b.width/2),dy=(a.top+a.height/2)-(b.top+b.height/2);
+      var start='translate('+dx+'px,'+dy+'px) scale('+sx+','+sy+')',base=getComputedStyle(to).transform;base=base==='none'?'':base;
+      var kf=[{transform:start+' '+base,borderRadius:'999px',opacity:.6},{transform:base,borderRadius:'28px',opacity:1}];
+      if(dir<0)kf.reverse();
+      return to.animate(kf,{duration:dir>0?560:380,easing:dir>0?SPRING:'cubic-bezier(.4,0,.2,1)',fill:'none'});
+    }
+    function openJ(){
+      jbd.hidden=false;jc.hidden=false;requestAnimationFrame(function(){jbd.classList.add('on');});
+      document.body.style.overflow='hidden';jb.style.visibility='hidden';
+      if(!reduceJ&&jc.animate){jc.classList.add('morphing');var an=morph(jb,jc,1);an.onfinish=function(){jc.classList.remove('morphing');var f=document.getElementById('jf-nome');if(f&&!jform.hidden)f.focus();};}
+      else{var f=document.getElementById('jf-nome');if(f)f.focus();}
+    }
+    function closeJ(){
+      jbd.classList.remove('on');
+      var end=function(){jc.hidden=true;jbd.hidden=true;jb.style.visibility='';document.body.style.overflow='';jc.classList.remove('morphing');jb.focus();};
+      if(!reduceJ&&jc.animate){jc.classList.add('morphing');var an=morph(jb,jc,-1);an.onfinish=end;}else end();
+    }
+    jb.addEventListener('click',openJ);
+    jbd.addEventListener('click',closeJ);
+    jc.querySelector('.join-close').addEventListener('click',closeJ);
+    jc.querySelector('.join-finish').addEventListener('click',closeJ);
+    document.addEventListener('keydown',function(e){if(e.key==='Escape'&&!jc.hidden)closeJ();});
+    jform.addEventListener('submit',function(e){
+      e.preventDefault();jerr.hidden=true;
+      var nome=document.getElementById('jf-nome'),email=document.getElementById('jf-email');
+      [nome,email].forEach(function(i){i.classList.remove('bad');});
+      var okMail=/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email.value.trim());
+      if(!nome.value.trim()||!okMail){if(!nome.value.trim())nome.classList.add('bad');if(!okMail)email.classList.add('bad');jerr.textContent='Preencha seu nome e um e-mail válido para entrar na lista.';jerr.hidden=false;return;}
+      var val=function(n){var x=jform.querySelector('input[name="'+n+'"]:checked');return x?x.value:'';};
+      var data={email:email.value.trim(),nome:nome.value.trim(),profissao:document.getElementById('jf-prof').value.trim(),tema:val('tema'),formato:val('formato'),floripa:document.getElementById('jf-floripa').checked?'Sim':''};
+      var E=JOIN.entries;
+      if(!E.email){window.open(JOIN.viewform,'_blank','noopener');jdone.querySelector('h3').innerHTML='Falta só <em>um passo</em>';jdone.querySelector('p').textContent='Abrimos o formulário da Dra. Juliana em outra aba. Complete por lá para garantir sua vaga na lista.';}
+      else{
+        var body=new URLSearchParams();
+        Object.keys(data).forEach(function(k){if(E[k]&&data[k]){if(k==='email'&&E.email==='emailAddress')body.append('emailAddress',data[k]);else body.append(E[k],data[k]);}});
+        try{fetch(JOIN.action,{method:'POST',mode:'no-cors',body:body});}catch(err){}
+      }
+      jform.hidden=true;jdone.hidden=false;
+    });
+  }
+
   // reviews scroll
   var tr=document.getElementById('review-track');
   if(tr){

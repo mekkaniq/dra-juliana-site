@@ -454,7 +454,10 @@
           <p class="eyebrow rule">Para profissionais da harmonização</p>
           <h2>Aprenda com a <em>Dra. Juliana</em></h2>
           <p>A Dra. Juliana está preparando experiências educacionais para profissionais: conteúdos on-line, mentoria e uma imersão presencial em Florianópolis. Conte o que você mais quer aprender e seja avisada em primeira mão.</p>
-          <a class="btn btn-primary" href="https://docs.google.com/forms/d/1sgAOzKUoRnhCUYpT8JwRyl03GRb-jR3e2xL5iUY33Lw/viewform" target="_blank" rel="noopener">Quero participar <svg><use href="#i-arrow"/></svg></a>
+          <div class="join-row">
+            <button class="btn btn-primary join-btn" id="join-btn" type="button" aria-haspopup="dialog" aria-controls="join-card">Entrar na lista de interesse <svg><use href="#i-arrow"/></svg></button>
+            <a class="join-alt" href="https://docs.google.com/forms/d/e/1FAIpQLSd4i8te0ZYiQ8CHe3ZWFagnWaSBi9BOtLhJOBN4udm0w5UDVw/viewform" target="_blank" rel="noopener">ou responda a pesquisa completa</a>
+          </div>
           <ul class="pro-topics">
           <li>Harmonização facial <small>Natural Lift</small></li>
           <li>Harmonização glútea e corporal <small>Perfect Bum</small></li>
@@ -504,6 +507,44 @@
     </div>
   </div>
 </footer>
+
+<div class="join-backdrop" id="join-backdrop" hidden></div>
+<div class="join-card" id="join-card" role="dialog" aria-modal="true" aria-labelledby="join-title" hidden>
+  <button class="join-close" type="button" aria-label="Fechar">×</button>
+  <form class="join-form" id="join-form" novalidate>
+    <div class="join-head">
+      <span class="join-badge"><svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="49" fill="#B3204F"/><circle cx="50" cy="50" r="44.5" fill="none" stroke="url(#g-gold)" stroke-width="1"/><use href="#ja-mark" x="17" y="31" width="66" height="38.5" color="#fff"/></svg></span>
+      <div><p class="eyebrow">Lista de interesse · Beta</p><h3 id="join-title">Aprenda com a <em>Dra. Juliana</em></h3></div>
+    </div>
+    <div class="join-fields">
+      <label class="jf"><span>Seu nome</span><input id="jf-nome" name="nome" type="text" autocomplete="name" required placeholder="Como podemos te chamar?"></label>
+      <label class="jf"><span>E-mail</span><input id="jf-email" name="email" type="email" autocomplete="email" required placeholder="voce@email.com"></label>
+      <label class="jf"><span>Profissão ou especialidade</span><input id="jf-prof" name="profissao" type="text" placeholder="Ex.: biomédica, dentista, farmacêutica"></label>
+      <fieldset class="jf-chips" data-name="tema"><legend>O que você mais quer aprender?</legend>
+        <label><input type="radio" name="tema" value="Harmonização facial"><span>Harmonização facial</span></label>
+        <label><input type="radio" name="tema" value="Harmonização glútea ou corporal"><span>Glútea e corporal</span></label>
+        <label><input type="radio" name="tema" value="Captação de pacientes"><span>Captação de pacientes</span></label>
+        <label><input type="radio" name="tema" value="Posicionamento / Gestão e crescimento da clínica"><span>Gestão e posicionamento</span></label>
+      </fieldset>
+      <fieldset class="jf-chips" data-name="formato"><legend>Formato preferido</legend>
+        <label><input type="radio" name="formato" value="Presencial"><span>Presencial</span></label>
+        <label><input type="radio" name="formato" value="On-line ao vivo"><span>On-line ao vivo</span></label>
+        <label><input type="radio" name="formato" value="Aulas gravadas"><span>Aulas gravadas</span></label>
+        <label><input type="radio" name="formato" value="Mentoria ou acompanhamento"><span>Mentoria</span></label>
+      </fieldset>
+      <label class="jf-check"><input type="checkbox" name="floripa" id="jf-floripa"><span>Tenho interesse na imersão presencial em Florianópolis</span></label>
+    </div>
+    <p class="join-error" id="join-error" role="alert" hidden></p>
+    <button class="btn btn-gold join-submit" type="submit">Entrar na lista <svg><use href="#i-arrow"/></svg></button>
+    <p class="join-note">Usamos seus dados só para avisar sobre os conteúdos da Dra. Juliana.</p>
+  </form>
+  <div class="join-done" id="join-done" hidden>
+    <svg class="join-check" viewBox="0 0 80 80" aria-hidden="true"><circle cx="40" cy="40" r="36"/><path d="M24 41l11 11 21-23"/></svg>
+    <h3>Você está <em>na lista</em></h3>
+    <p>Assim que as datas e os formatos forem definidos, você fica sabendo em primeira mão.</p>
+    <button class="btn btn-ghost join-finish" type="button">Fechar</button>
+  </div>
+</div>
 
 <a class="wa-float" data-wa="Olá, Dra. Juliana! Vim pelo site e gostaria de agendar uma avaliação." href="#contato" aria-label="Falar no WhatsApp"><i><svg><use href="#i-wa"/></svg></i><span>Agende pelo WhatsApp</span></a>
 
